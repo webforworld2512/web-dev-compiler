@@ -1,0 +1,53 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app-header {
+  background: #1e1e1e;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.save-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.save-btn:hover {
+  background: #45a049;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.main-content > * {
+  flex: 0 0 50%;
+  min-width: 0;
+}
+

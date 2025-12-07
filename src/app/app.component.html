@@ -1,0 +1,22 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>Web Dev Compiler</h1>
+    <button class="save-btn" (click)="onSave()">Save & Get Shareable Link</button>
+  </header>
+  
+  <div class="main-content">
+    <app-editor
+      [htmlCode]="htmlCode"
+      [cssCode]="cssCode"
+      [jsCode]="jsCode"
+      (codeChange)="onCodeChange($event)"
+    ></app-editor>
+    
+    <app-preview
+      [htmlCode]="htmlCode"
+      [cssCode]="cssCode"
+      [jsCode]="jsCode"
+    ></app-preview>
+  </div>
+</div>
+

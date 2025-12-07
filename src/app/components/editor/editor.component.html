@@ -1,0 +1,44 @@
+<div class="editor-container">
+  <div class="editor-tabs">
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'html'"
+      (click)="setActiveTab('html')"
+    >
+      HTML
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'css'"
+      (click)="setActiveTab('css')"
+    >
+      CSS
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'js'"
+      (click)="setActiveTab('js')"
+    >
+      JavaScript
+    </button>
+  </div>
+  
+  <div class="editor-content">
+    <div 
+      id="html-editor" 
+      class="monaco-editor" 
+      [style.display]="activeTab === 'html' ? 'block' : 'none'"
+    ></div>
+    <div 
+      id="css-editor" 
+      class="monaco-editor" 
+      [style.display]="activeTab === 'css' ? 'block' : 'none'"
+    ></div>
+    <div 
+      id="js-editor" 
+      class="monaco-editor" 
+      [style.display]="activeTab === 'js' ? 'block' : 'none'"
+    ></div>
+  </div>
+</div>
+
