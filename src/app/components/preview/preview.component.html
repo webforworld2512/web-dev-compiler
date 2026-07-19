@@ -1,15 +1,32 @@
 <div class="preview-container">
   <div class="preview-header">
-    <h3>Preview</h3>
+    <div class="traffic-lights" aria-hidden="true">
+      <span class="light light-red"></span>
+      <span class="light light-yellow"></span>
+      <span class="light light-green"></span>
+    </div>
+    <div class="address-bar">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      localhost/preview
+    </div>
+    <button class="refresh-btn" (click)="refresh()" title="Re-run the code" aria-label="Refresh preview">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+    </button>
   </div>
   <div class="preview-content">
-    <iframe 
+    <iframe
       id="preview-iframe"
       class="preview-iframe"
       [srcdoc]="compiledCode"
       (load)="onIframeLoad()"
       sandbox="allow-scripts allow-same-origin"
+      title="Live preview of your code"
     ></iframe>
   </div>
 </div>
-

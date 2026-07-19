@@ -1,22 +1,57 @@
 <div class="app-container">
   <header class="app-header">
-    <h1>Web Dev Compiler</h1>
-    <button class="save-btn" (click)="onSave()">Save & Get Shareable Link</button>
+    <div class="brand">
+      <span class="brand-glyph" aria-hidden="true">&lt;/&gt;</span>
+      <div class="brand-text">
+        <h1>webdev<span class="brand-dot">.</span>compiler</h1>
+        <span class="brand-tagline">html · css · js playground</span>
+      </div>
+    </div>
+    <button class="share-btn" (click)="onSave()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      Share link
+    </button>
   </header>
-  
-  <div class="main-content">
-    <app-editor
-      [htmlCode]="htmlCode"
-      [cssCode]="cssCode"
-      [jsCode]="jsCode"
-      (codeChange)="onCodeChange($event)"
-    ></app-editor>
-    
-    <app-preview
-      [htmlCode]="htmlCode"
-      [cssCode]="cssCode"
-      [jsCode]="jsCode"
-    ></app-preview>
+  <div class="header-rule" aria-hidden="true"></div>
+
+  <div class="main-content" #mainContent [class.resizing]="resizing">
+    <div class="editor-pane" [style.flex-basis.%]="editorWidth">
+      <app-editor
+        [htmlCode]="htmlCode"
+        [cssCode]="cssCode"
+        [jsCode]="jsCode"
+        (codeChange)="onCodeChange($event)"
+      ></app-editor>
+    </div>
+
+    <div
+      class="split-divider"
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize editor and preview"
+      tabindex="0"
+      (mousedown)="startResize($event)"
+      (keydown)="onDividerKeydown($event)"
+    >
+      <span class="divider-grip" aria-hidden="true"></span>
+    </div>
+
+    <div class="preview-pane" [style.flex-basis.%]="100 - editorWidth">
+      <app-preview
+        [htmlCode]="htmlCode"
+        [cssCode]="cssCode"
+        [jsCode]="jsCode"
+      ></app-preview>
+    </div>
+  </div>
+
+  <div class="toast" [class.toast-visible]="toastVisible" role="status">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    {{ toastMessage }}
   </div>
 </div>
-

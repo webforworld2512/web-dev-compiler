@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditorComponent } from './components/editor/editor.component';
 import { PreviewComponent } from './components/preview/preview.component';
@@ -16,7 +16,50 @@ export class AppComponent implements OnInit {
   cssCode: string = '';
   jsCode: string = '';
 
+  editorWidth = 50;
+  toastVisible = false;
+  toastMessage = '';
+  resizing = false;
+  private toastTimer: any;
+
+  @ViewChild('mainContent') mainContent!: ElementRef<HTMLDivElement>;
+
   constructor(private codeService: CodeService) {}
+
+  startResize(event: MouseEvent) {
+    event.preventDefault();
+    this.resizing = true;
+  }
+
+  onDividerKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.editorWidth = Math.max(20, this.editorWidth - 2);
+      event.preventDefault();
+    } else if (event.key === 'ArrowRight') {
+      this.editorWidth = Math.min(80, this.editorWidth + 2);
+      event.preventDefault();
+    }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (!this.resizing) return;
+    const rect = this.mainContent.nativeElement.getBoundingClientRect();
+    const percent = ((event.clientX - rect.left) / rect.width) * 100;
+    this.editorWidth = Math.min(80, Math.max(20, percent));
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.resizing = false;
+  }
+
+  private showToast(message: string) {
+    this.toastMessage = message;
+    this.toastVisible = true;
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => (this.toastVisible = false), 2600);
+  }
 
   ngOnInit() {
     // Load code from URL or localStorage
@@ -92,7 +135,7 @@ console.log('Hello World!');`;
     }).subscribe(shareUrl => {
       if (shareUrl) {
         navigator.clipboard.writeText(shareUrl).then(() => {
-          alert('Shareable link copied to clipboard!\n' + shareUrl);
+          this.showToast('Link copied to clipboard');
         });
       }
     });

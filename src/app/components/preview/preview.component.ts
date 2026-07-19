@@ -81,6 +81,10 @@ export class PreviewComponent implements OnInit, OnChanges, AfterViewInit {
 </html>`;
   }
 
+  refresh() {
+    this.updatePreview();
+  }
+
   onIframeLoad() {
     this.iframe = document.getElementById('preview-iframe') as HTMLIFrameElement;
     this.iframeReady = true;

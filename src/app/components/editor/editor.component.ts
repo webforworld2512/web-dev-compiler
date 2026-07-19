@@ -56,46 +56,51 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
       await this.loadMonacoScript();
     }
 
-    // Initialize HTML Editor
+    monaco.editor.defineTheme('playground-dark', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [],
+      colors: {
+        'editor.background': '#131522',
+        'editor.lineHighlightBackground': '#1a1d2e',
+        'editorLineNumber.foreground': '#4a5075',
+        'editorLineNumber.activeForeground': '#8b91b5',
+        'editorIndentGuide.background': '#2a2f4a',
+        'editor.selectionBackground': '#2a2f4a'
+      }
+    });
+
+    const editorOptions = {
+      theme: 'playground-dark',
+      automaticLayout: true,
+      minimap: { enabled: false },
+      fontSize: 14,
+      fontFamily: "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace",
+      fontLigatures: true,
+      padding: { top: 16 },
+      wordWrap: 'on',
+      scrollBeyondLastLine: false,
+      suggestOnTriggerCharacters: true,
+      quickSuggestions: true,
+      acceptSuggestionOnEnter: 'on'
+    };
+
     this.htmlEditor = monaco.editor.create(document.getElementById('html-editor')!, {
+      ...editorOptions,
       value: this.htmlCode,
-      language: 'html',
-      theme: 'vs-dark',
-      automaticLayout: true,
-      minimap: { enabled: true },
-      fontSize: 14,
-      wordWrap: 'on',
-      suggestOnTriggerCharacters: true,
-      quickSuggestions: true,
-      acceptSuggestionOnEnter: 'on'
+      language: 'html'
     });
 
-    // Initialize CSS Editor
     this.cssEditor = monaco.editor.create(document.getElementById('css-editor')!, {
+      ...editorOptions,
       value: this.cssCode,
-      language: 'css',
-      theme: 'vs-dark',
-      automaticLayout: true,
-      minimap: { enabled: true },
-      fontSize: 14,
-      wordWrap: 'on',
-      suggestOnTriggerCharacters: true,
-      quickSuggestions: true,
-      acceptSuggestionOnEnter: 'on'
+      language: 'css'
     });
 
-    // Initialize JavaScript Editor
     this.jsEditor = monaco.editor.create(document.getElementById('js-editor')!, {
+      ...editorOptions,
       value: this.jsCode,
-      language: 'javascript',
-      theme: 'vs-dark',
-      automaticLayout: true,
-      minimap: { enabled: true },
-      fontSize: 14,
-      wordWrap: 'on',
-      suggestOnTriggerCharacters: true,
-      quickSuggestions: true,
-      acceptSuggestionOnEnter: 'on'
+      language: 'javascript'
     });
 
     // Add change listeners
